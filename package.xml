@@ -4,93 +4,102 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.junicorn</groupId>
+    <groupId>io.github.otale</groupId>
     <artifactId>tale</artifactId>
-    <version>1.1.0</version>
+    <version>least</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mysql.version>5.1.38</mysql.version>
-        <druid.version>1.0.24</druid.version>
-        <blade.version>1.7.1-beta</blade.version>
-        <blade-jdbc.version>0.1.5</blade-jdbc.version>
-        <blade-tpl.verion>0.0.9</blade-tpl.verion>
-        <blade-embed-jetty.version>0.1.2</blade-embed-jetty.version>
+        <sqlite.version>3.15.1</sqlite.version>
+        <blade-mvc.version>2.0.6-BETA</blade-mvc.version>
+        <blade-jdbc.version>0.2.2-RELEASE</blade-jdbc.version>
+        <blade-tpl.verion>0.1.2</blade-tpl.verion>
+        <blade-validator>0.0.2</blade-validator>
+        <commonmark.version>0.10.0</commonmark.version>
+        <rome.version>1.0</rome.version>
+        <emoji.version>3.2.0</emoji.version>
     </properties>
 
     <dependencies>
         <!-- mvc -->
         <dependency>
             <groupId>com.bladejava</groupId>
-            <artifactId>blade-core</artifactId>
-            <version>${blade.version}</version>
+            <artifactId>blade-mvc</artifactId>
+            <version>${blade-mvc.version}</version>
         </dependency>
 
+        <!-- Êý¾Ý¿â²Ù×÷ -->
         <dependency>
-            <groupId>com.bladejava</groupId>
-            <artifactId>blade-kit</artifactId>
-            <version>1.4.1-alpha</version>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>${sqlite.version}</version>
         </dependency>
         
-        <!-- æ•°æ®åº“æ“ä½œ -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
-        </dependency>
         <dependency>
             <groupId>com.bladejava</groupId>
             <artifactId>blade-jdbc</artifactId>
             <version>${blade-jdbc.version}</version>
         </dependency>
 
-        <!--è¿žæŽ¥æ± -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>${druid.version}</version>
-        </dependency>
-
-        <!-- æ¨¡æ¿å¼•æ“Ž -->
+        <!-- Ä£°åÒýÇæ -->
         <dependency>
             <groupId>com.bladejava</groupId>
             <artifactId>blade-template-jetbrick</artifactId>
             <version>${blade-tpl.verion}</version>
         </dependency>
 
-        <!--markdownå¤„ç†-->
+        <!--markdown´¦Àí-->
         <dependency>
             <groupId>com.atlassian.commonmark</groupId>
             <artifactId>commonmark</artifactId>
-            <version>0.8.0</version>
+            <version>${commonmark.version}</version>
         </dependency>
         <dependency>
             <groupId>com.atlassian.commonmark</groupId>
             <artifactId>commonmark-ext-gfm-tables</artifactId>
-            <version>0.8.0</version>
+            <version>${commonmark.version}</version>
         </dependency>
-        <!--webå®¹å™¨-->
-        <dependency>
-            <groupId>com.bladejava</groupId>
-            <artifactId>blade-embed-jetty</artifactId>
-            <version>${blade-embed-jetty.version}</version>
-        </dependency>
-        <!--RSSè¾“å‡º-->
+
+        <!--RSSÊä³ö-->
         <dependency>
             <groupId>rome</groupId>
             <artifactId>rome</artifactId>
-            <version>1.0</version>
+            <version>${rome.version}</version>
         </dependency>
-        <!--è¿‡æ»¤emojiå­—ç¬¦-->
+        <!--¹ýÂË emoji ×Ö·û-->
         <dependency>
             <groupId>com.vdurmont</groupId>
             <artifactId>emoji-java</artifactId>
-            <version>3.2.0</version>
+            <version>${emoji.version}</version>
         </dependency>
 
+        <!-- ÑéÖ¤ -->
+        <dependency>
+            <groupId>com.bladejava</groupId>
+            <artifactId>blade-validator</artifactId>
+            <version>${blade-validator}</version>
+        </dependency>
+
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.18</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <repositories>
+        <repository>
+            <id>oss-releases</id>
+            <url>https://oss.sonatype.org/content/repositories/releases</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
         <repository>
             <id>oss-snapshots</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
@@ -111,15 +120,9 @@
                     <resource>
                         <directory>src/main/java</directory>
                         <filtering>false</filtering>
-                    </resource>
-                    <!-- æŠŠæ”¾åœ¨æ ¹ç›®å½•ä¸‹çš„è„šæœ¬æ–‡ä»¶.sh,.batæ‹·è´åˆ°binç›®å½•ä¸­ -->
-                    <resource>
-                        <directory>.</directory>
-                        <includes>
-                            <include>**/*.sh</include>
-                            <include>**/*.bat</include>
-                        </includes>
-                        <targetPath>${project.build.directory}/bin</targetPath>
+                        <excludes>
+                            <exclude>**/*.java</exclude>
+                        </excludes>
                     </resource>
                 </resources>
             </build>
@@ -191,7 +194,7 @@
                             <addClasspath>true</addClasspath>
                         </manifest>
                         <manifestEntries>
-                            <!-- åœ¨Class-Pathä¸‹æ·»åŠ é…ç½®æ–‡ä»¶çš„è·¯å¾„ -->
+                            <!-- ÔÚClass-PathÏÂÌí¼ÓÅäÖÃÎÄ¼þµÄÂ·¾¶ -->
                             <Class-Path>resources/</Class-Path>
                         </manifestEntries>
                     </archive>
